@@ -78,13 +78,15 @@ followed by the rest (deduplicated).
 ### Steps
 
 ```bash
-git clone <your-repo-url>
+git clone "https://github.com/Ayushgupta2408/identity-reconciliation"
 cd identity-reconciliation
 npm install
 
 cp .env.example .env
 # edit .env -> set DATABASE_URL to your local Postgres instance
 
+#  Generate Prisma client + run migrations
+npx prisma generate
 npx prisma migrate dev --name init
 npm run seed        # optional: adds sample contacts
 
