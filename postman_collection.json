@@ -1,0 +1,91 @@
+{
+  "info": {
+    "name": "Identity Reconciliation - Zamazon.com",
+    "description": "Requests exercising the /identify endpoint's core scenarios: new contact, secondary creation, primary merge, and validation errors.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "1. New contact (no matches)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/identify",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"doc.brown@zamazon.com\",\n  \"phoneNumber\": \"1234567890\"\n}"
+        }
+      }
+    },
+    {
+      "name": "2. Same phone, new email -> creates secondary",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/identify",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"emmett.brown@zamazon.com\",\n  \"phoneNumber\": \"1234567890\"\n}"
+        }
+      }
+    },
+    {
+      "name": "3. Exact repeat -> no new contact",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/identify",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"doc.brown@zamazon.com\",\n  \"phoneNumber\": \"1234567890\"\n}"
+        }
+      }
+    },
+    {
+      "name": "4. Second independent identity",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/identify",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"marty.mcfly@zamazon.com\",\n  \"phoneNumber\": \"9998887777\"\n}"
+        }
+      }
+    },
+    {
+      "name": "5. Bridge request -> merges two primaries",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/identify",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"doc.brown@zamazon.com\",\n  \"phoneNumber\": \"9998887777\"\n}"
+        }
+      }
+    },
+    {
+      "name": "6. Invalid payload (no email/phone)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/identify",
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        }
+      }
+    }
+  ]
+}
