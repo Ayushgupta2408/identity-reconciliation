@@ -182,6 +182,8 @@ Kubernetes liveness/readiness probe.
 - **Soft deletes**: the schema has `deletedAt` and all queries filter on
   `deletedAt: null`, so contacts can be archived without breaking
   historical links.
+# All test cases passed 
+<img width="960" height="392" alt="image" src="https://github.com/user-attachments/assets/b4974165-6946-4c41-bfe2-c981b02913a0" />
 
   # schema as suggested
   <img width="940" height="324" alt="image" src="https://github.com/user-attachments/assets/1d7bd83c-828e-4b0a-90fe-090ae3352aa9" />
